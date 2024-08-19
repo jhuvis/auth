@@ -18,7 +18,7 @@ COPY . .
 RUN npx prisma generate
 
 # Expose the port the app runs on
-EXPOSE 3333
+EXPOSE 5000
 
 # Command to run the app
 CMD ["npm", "run", "start:migrate:prod"]
