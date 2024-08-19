@@ -1,26 +1,26 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:latest
     container_name: db
     restart: always
     ports:
-      - "2345:5432" # Map port 5432 in the container to 2345 on the host
-    env_file:
-      - .env
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: zezin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     volumes:
-      - pg:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
 
   node_app:
-    container_name: node_app
     build: .
+    container_name: node_app
     ports:
       - "5000:5000"
     depends_on:
       - db
-    env_file:
-      - .env
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/zezin
 
 volumes:
-  pg:
+  pg_data:
