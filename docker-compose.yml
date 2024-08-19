@@ -1,23 +1,26 @@
+version: '3.8'
+
 services:
   db:
-    image: postgres
+    image: postgres:latest
     container_name: db
     restart: always
     ports:
-      - 2345:5432
+      - "2345:5432" # Map port 5432 in the container to 2345 on the host
     env_file:
       - .env
     volumes:
       - pg:/var/lib/postgresql/data
+
   node_app:
     container_name: node_app
     build: .
     ports:
-      - 5000:5000
+      - "5000:5000"
     depends_on:
       - db
     env_file:
       - .env
 
 volumes:
-  pg: # volume para os postgres
+  pg:

@@ -1,4 +1,4 @@
-# Use Node.js 20.11.1 base image
+# Use Node.js base image
 FROM node:20.11.1-alpine
 
 # Set working directory
