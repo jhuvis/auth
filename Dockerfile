@@ -1,24 +1,23 @@
-# Use Node.js base image
+# Usar a imagem oficial do Node.js
 FROM node:20.11.1-alpine
 
-# Set working directory
+# Definir o diretório de trabalho
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copiar o package.json e o package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm cache clean --force && \
-    npm install --legacy-peer-deps
+# Instalar as dependências
+RUN npm cache clean --force && npm install --legacy-peer-deps
 
-# Copy the rest of the application code
+# Copiar o restante do código da aplicação
 COPY . .
 
-# Generate Prisma Client code
+# Gerar o Prisma Client
 RUN npx prisma generate
 
-# Expose the port the app runs on
+# Expor a porta que a aplicação vai usar
 EXPOSE 5000
 
-# Command to run the app
+# Comando para rodar a aplicação
 CMD ["npm", "run", "start:migrate:prod"]

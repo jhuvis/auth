@@ -1,16 +1,18 @@
+version: '3.8'
+
 services:
   db:
     image: postgres:latest
     container_name: db
     restart: always
     ports:
-      - "5432:5432"
+      - "2345:5432"
     environment:
       POSTGRES_DB: zezin
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     volumes:
-      - pg_data:/var/lib/postgresql/data
+      - pg:/var/lib/postgresql/data
 
   node_app:
     build: .
@@ -21,6 +23,9 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://postgres:password@db:5432/zezin
+    volumes:
+      - .:/app
+    command: ["npm", "run", "start:migrate:prod"]
 
 volumes:
-  pg_data:
+  pg:
